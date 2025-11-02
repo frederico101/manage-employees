@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.Domain.Entities;
+using EmployeeManagement.Domain.ValueObjects;
+using EmployeeManagement.Domain.Enums;
 
 namespace EmployeeManagement.Infrastructure.Data;
 
@@ -29,11 +31,11 @@ public class ApplicationDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(100);
 
-            entity.Property(e => e.Email)
+            entity.Property(e => e.EmailAddress)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            entity.HasIndex(e => e.Email)
+            entity.HasIndex(e => e.EmailAddress)
                 .IsUnique();
 
             entity.Property(e => e.DocNumber)
@@ -48,8 +50,7 @@ public class ApplicationDbContext : DbContext
 
             entity.Property(e => e.Role)
                 .IsRequired()
-                .HasConversion<string>()
-                .HasMaxLength(20);
+                .HasConversion<int>();
 
             entity.Property(e => e.PasswordHash)
                 .IsRequired()
@@ -61,12 +62,19 @@ public class ApplicationDbContext : DbContext
                 .HasForeignKey(e => e.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Store Phones as JSON array or comma-separated (will be improved in Phase 2)
-            entity.Property(e => e.Phones)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList())
-                .HasColumnName("Phones");
+            // Configure Phones as owned entity collection
+            entity.OwnsMany(e => e.Phones, phone =>
+            {
+                phone.ToTable("EmployeePhones");
+                phone.Property<int>("Id");
+                phone.HasKey("Id");
+                phone.Property(p => p.Number)
+                    .IsRequired()
+                    .HasMaxLength(20);
+                phone.Property(p => p.Type)
+                    .IsRequired()
+                    .HasConversion<int>();
+            });
 
             entity.Property(e => e.CreatedAt)
                 .IsRequired();
@@ -75,4 +83,3 @@ public class ApplicationDbContext : DbContext
         });
     }
 }
-
