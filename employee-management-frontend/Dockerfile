@@ -1,10 +1,20 @@
 # Build stage
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY package*.json ./
-COPY yarn.lock ./
-RUN yarn install
+
+# Copy package files
+COPY package.json yarn.lock* package-lock.json* ./
+
+# Install dependencies
+RUN if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+    elif [ -f package-lock.json ]; then npm ci; \
+    else echo "Lockfile not found." && exit 1; \
+    fi
+
+# Copy source code
 COPY . .
+
+# Build the app
 RUN yarn build
 
 # Production stage

@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build outputs
+bin/
+obj/
+node_modules/
+build/
+dist/
+
+# Frontend
+employee-management-frontend/node_modules
+employee-management-frontend/build
+employee-management-frontend/.env.local
+employee-management-frontend/.env.development.local
+employee-management-frontend/.env.test.local
+employee-management-frontend/.env.production.local
+
+# Backend
+**/bin/
+**/obj/
+**/logs/
+

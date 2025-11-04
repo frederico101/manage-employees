@@ -1,0 +1,161 @@
+.employee-details-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.details-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-weight: 500;
+}
+
+.action-button.edit {
+  background: #ffc107;
+  color: #333;
+}
+
+.action-button.delete {
+  background: #dc3545;
+  color: white;
+}
+
+.action-button.back {
+  background: #6c757d;
+  color: white;
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
+
+.details-card {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.details-section {
+  margin-bottom: 40px;
+}
+
+.details-section:last-child {
+  margin-bottom: 0;
+}
+
+.details-section h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 20px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.detail-item div {
+  color: #333;
+  font-size: 16px;
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.role-badge.role-employee {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.role-badge.role-leader {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.role-badge.role-director {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.phones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.phone-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.phone-number {
+  font-weight: 500;
+  color: #333;
+}
+
+.phone-type {
+  color: #666;
+  font-size: 14px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #fcc;
+}
+

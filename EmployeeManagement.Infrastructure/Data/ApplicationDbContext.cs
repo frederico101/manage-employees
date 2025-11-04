@@ -46,7 +46,10 @@ public class ApplicationDbContext : DbContext
                 .IsUnique();
 
             entity.Property(e => e.DateOfBirth)
-                .IsRequired();
+                .IsRequired()
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v.Date, DateTimeKind.Utc), // Convert to UTC at midnight to preserve date
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
             entity.Property(e => e.Role)
                 .IsRequired()
@@ -77,9 +80,15 @@ public class ApplicationDbContext : DbContext
             });
 
             entity.Property(e => e.CreatedAt)
-                .IsRequired();
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
-            entity.Property(e => e.UpdatedAt);
+            entity.Property(e => e.UpdatedAt)
+                .HasConversion(
+                    v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                    v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null);
         });
     }
 }

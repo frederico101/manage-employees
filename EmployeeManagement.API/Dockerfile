@@ -17,8 +17,21 @@ RUN dotnet build "EmployeeManagement.API.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "EmployeeManagement.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 WORKDIR /app
+
+# Install PostgreSQL client for health checks
+RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+
+# Copy published files
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "EmployeeManagement.API.dll"]
+
+# Copy source files for migrations (needed for EF Core tools)
+COPY --from=build /src /src
+
+# Copy entrypoint script
+COPY EmployeeManagement.API/entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
 

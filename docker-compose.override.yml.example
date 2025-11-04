@@ -1,0 +1,13 @@
+# This file is for local development overrides
+# Copy this to docker-compose.override.yml and modify as needed
+
+version: '3.8'
+
+services:
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=EmployeeManagementDb;Username=postgres;Password=postgres
+    volumes:
+      - ./logs:/app/logs
+
